@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.recruit.mapper.backend.admin.BackendMenuMapper" >
+
+    <sql id="baseSql">
+        SELECT
+        id as id,
+        parent_id as parentId,
+        has_child as child,
+        menu_name as menuName,
+        link_url as linkUrl,
+        vue as vue
+        FROM backend_menu
+    </sql>
+
+    <select id="getMenuList" resultType="com.cy.recruit.dto.backend.admin.BackendMenuDto">
+        <include refid="baseSql"/>
+        WHERE parent_id = #{parentId} and has_child = #{hasChild} and status = 1
+    </select>
+
+    <select id="getAllMenuList" resultType="com.cy.recruit.model.backend.admin.BackendMenu">
+        <include refid="baseSql"/>
+        WHERE status = 1
+    </select>
+
+</mapper>

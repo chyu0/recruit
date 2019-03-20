@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cy.recruit.mapper.backend.admin.BackendUserMapper" >
+
+    <sql id="baseSql">
+        SELECT
+          id as id,
+          name as name,
+          email as email,
+          password as password,
+          token as token,
+          enable as enable,
+          register_time as registerTime
+        FROM backend_user
+    </sql>
+
+    <select id="getUserInfo" resultType="com.cy.recruit.model.backend.BackendUser">
+        <include refid="baseSql"/>
+        WHERE email = #{userName} limit 1
+    </select>
+
+    <insert id="registerUser" parameterType="com.cy.recruit.model.backend.BackendUser">
+        INSERT INTO backend_user(name,email,password,token,enable,register_time)
+        VALUES (#{name},#{email},#{password},#{token},#{enable},now())
+    </insert>
+
+</mapper>
